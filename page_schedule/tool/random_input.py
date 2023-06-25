@@ -1,5 +1,6 @@
 import os
 import random
+import sys
 
 from page_schedule.core.scheduler import scheduler
 from page_schedule.core.scheduler.fifo import fifo as FIFO
@@ -12,12 +13,16 @@ class random_input:
     pages: list[int]
     alg: scheduler
     alg_str: str
-    clear_str = 'cls'
+    clear_str: str
 
     def __init__(self):
         self.alg = FIFO()
         self.blocks = 0
         self.pages = []
+        if sys.platform.startswith('win32'):
+            self.clear_str = 'cls'
+        else:
+            self.clear_str = 'clear'
 
     def input(self):
         alg = random.randrange(1, 4)
@@ -34,7 +39,7 @@ class random_input:
         page_length = random.randrange(self.blocks, 17)
         while page_length:
             page_length = page_length - 1
-            self.pages.append(random.randrange(1, min(20, 3*self.blocks)))
+            self.pages.append(random.randrange(1, min(20, 3 * self.blocks)))
 
         os.system(self.clear_str)
         print("随机完成 随机的数据为: ")
@@ -50,5 +55,3 @@ class random_input:
 
     def get_pages(self):
         return self.pages
-
-

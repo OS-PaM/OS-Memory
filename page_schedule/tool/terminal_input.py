@@ -1,4 +1,5 @@
 import os
+import sys
 
 from page_schedule.core.scheduler import scheduler
 from page_schedule.core.scheduler.fifo import fifo as FIFO
@@ -11,12 +12,16 @@ class terminal_input:
     pages: list[int]
     alg: scheduler
     alg_str: str
-    clear_str = 'cls'
+    clear_str: str
 
     def __init__(self):
         self.alg = FIFO()
         self.blocks = 0
         self.pages = []
+        if sys.platform.startswith('win32'):
+            self.clear_str = 'cls'
+        else:
+            self.clear_str = 'clear'
 
     def input(self):
         os.system(self.clear_str)
@@ -74,5 +79,3 @@ class terminal_input:
 
     def get_pages(self):
         return self.pages
-
-
