@@ -12,13 +12,13 @@ class lru(Scheduler):
 
         page = ready_pages[0]
         if memory.append(page):
-            return True, True                   # 进行添加操作 添加成功 说明没有发生缺页/替换 命中
+            return True, True  # 进行添加操作 添加成功 说明没有发生缺页/替换 命中
         else:
-            if not memory.contains(page):       # 如果不存在而且放入失败 说明内存已满 发生了缺页/替换
+            if not memory.contains(page):  # 如果不存在而且放入失败 说明内存已满 发生了缺页/替换
                 memory_pages = memory.get_all()
                 min_index = 0
                 min_page_times = 0
-                for index,memory_page in enumerate(memory_pages):
+                for index, memory_page in enumerate(memory_pages):  # 检查内存里的页使用记录 选取最小的替换
                     if memory_page[1] > min_page_times:
                         min_index = index
                         min_page_times = memory_page[1]
@@ -26,4 +26,4 @@ class lru(Scheduler):
                 memory.append(page)
                 return True, True
             else:
-                return False, False             # 如果存在而且放入失败 说明内存未满 发生了缺页/替换 （替换空页）
+                return False, False  # 如果存在而且放入失败 说明内存未满 发生了缺页/替换 （替换空页）

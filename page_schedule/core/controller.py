@@ -47,4 +47,3 @@ class controller:
 
     def print_fault_odds(self):
         print("缺页概率: " + str(self.fault_times / self.len))
-    pass
